@@ -7,17 +7,21 @@
   <meta name="description" content="A collection of browser-based audio tools by Artemy Zen." />
   <style>
     :root {
-      --bg: #030306;
-      --bg-2: #090912;
-      --card: rgba(11, 11, 21, 0.88);
-      --card-2: rgba(19, 15, 36, 0.84);
-      --text: #f6f1ff;
-      --muted: #aaa0c8;
-      --accent: #ff4fd8;
-      --accent-2: #46e7ff;
-      --accent-3: #9b5cff;
-      --line: rgba(120, 220, 255, 0.22);
-      --shadow: rgba(0, 0, 0, 0.58);
+      --bg: #09070d;
+      --bg-2: #15111d;
+      --card: rgba(18, 15, 26, 0.92);
+      --card-2: rgba(27, 21, 38, 0.96);
+      --text: #f3ecdf;
+      --muted: #b7adc6;
+      --accent: #ffb36b;
+      --accent-2: #7fe6f2;
+      --accent-3: #b06dff;
+      --line: rgba(240, 228, 214, 0.16);
+      --shadow: rgba(0, 0, 0, 0.64);
+
+      --synth-pink: rgba(255, 74, 167, 0.24);
+      --synth-cyan: rgba(78, 224, 255, 0.22);
+      --synth-violet: rgba(176, 109, 255, 0.22);
     }
 
     * {
@@ -29,10 +33,11 @@
       margin: 0;
       min-height: 100%;
       background:
-        radial-gradient(circle at 18% 12%, rgba(255, 79, 216, 0.20), transparent 34%),
-        radial-gradient(circle at 82% 18%, rgba(70, 231, 255, 0.14), transparent 30%),
-        radial-gradient(circle at 52% 0%, rgba(155, 92, 255, 0.18), transparent 34%),
-        linear-gradient(135deg, var(--bg), #020203 68%);
+        radial-gradient(circle at 16% 12%, rgba(255, 179, 107, 0.10), transparent 34%),
+        radial-gradient(circle at 82% 18%, var(--synth-cyan), transparent 30%),
+        radial-gradient(circle at 55% 0%, var(--synth-violet), transparent 34%),
+        radial-gradient(circle at 14% 84%, var(--synth-pink), transparent 38%),
+        linear-gradient(180deg, #17111d 0%, #0d0a12 46%, #07070b 100%);
       color: var(--text);
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
@@ -42,12 +47,22 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      opacity: 0.24;
-      background-image:
-        linear-gradient(rgba(70, 231, 255, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 79, 216, 0.055) 1px, transparent 1px),
-        radial-gradient(circle, rgba(255, 255, 255, 0.55) 1px, transparent 1.4px);
-      background-size: 28px 28px, 28px 28px, 190px 190px;
+      opacity: 0.40;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.035) 0px,
+          rgba(255, 255, 255, 0.035) 1px,
+          transparent 1px,
+          transparent 4px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255, 74, 167, 0.06) 0%,
+          transparent 18%,
+          transparent 82%,
+          rgba(78, 224, 255, 0.06) 100%
+        );
       mix-blend-mode: screen;
     }
 
@@ -56,13 +71,16 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background: linear-gradient(
-        transparent 0%,
-        rgba(255, 255, 255, 0.035) 50%,
-        transparent 100%
-      );
-      background-size: 100% 4px;
-      opacity: 0.38;
+      background:
+        linear-gradient(
+          90deg,
+          rgba(255, 74, 167, 0.04),
+          transparent 30%,
+          transparent 70%,
+          rgba(78, 224, 255, 0.04)
+        ),
+        radial-gradient(circle at 50% 50%, transparent 48%, rgba(0, 0, 0, 0.30) 100%);
+      opacity: 0.95;
     }
 
     .page {
@@ -82,10 +100,38 @@
 
     .panel {
       border: 1px solid var(--line);
-      background: linear-gradient(145deg, rgba(13, 12, 24, 0.92), rgba(3, 3, 8, 0.92));
-      box-shadow: 0 24px 70px var(--shadow), 0 0 40px rgba(70, 231, 255, 0.06);
-      backdrop-filter: blur(12px);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+        linear-gradient(135deg, rgba(255, 179, 107, 0.06), transparent 54%),
+        linear-gradient(225deg, rgba(78, 224, 255, 0.08), transparent 60%),
+        linear-gradient(90deg, rgba(255, 74, 167, 0.04), transparent 44%, rgba(176, 109, 255, 0.04)),
+        rgba(14, 13, 20, 0.92);
+      box-shadow:
+        0 24px 70px var(--shadow),
+        0 0 34px rgba(78, 224, 255, 0.07),
+        0 0 20px rgba(255, 74, 167, 0.04);
+      backdrop-filter: blur(8px);
       overflow: hidden;
+      position: relative;
+    }
+
+    .panel::after,
+    .tool-card::after,
+    .footer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          rgba(255,255,255,0.018) 0px,
+          rgba(255,255,255,0.018) 1px,
+          transparent 1px,
+          transparent 4px
+        );
+      opacity: 0.4;
+      mix-blend-mode: screen;
     }
 
     .intro {
@@ -98,7 +144,7 @@
       position: absolute;
       top: 14px;
       right: 18px;
-      color: rgba(70, 231, 255, 0.22);
+      color: rgba(127, 230, 242, 0.34);
       font-size: 11px;
       letter-spacing: 0.18em;
     }
@@ -112,7 +158,6 @@
       letter-spacing: 0.16em;
       text-transform: uppercase;
       margin-bottom: 18px;
-      text-shadow: 0 0 14px rgba(70, 231, 255, 0.42);
     }
 
     .eyebrow::before {
@@ -120,7 +165,7 @@
       width: 38px;
       height: 1px;
       background: var(--accent);
-      box-shadow: 0 0 18px var(--accent);
+      box-shadow: 0 0 10px rgba(255, 179, 107, 0.2), 0 0 18px rgba(255, 74, 167, 0.08);
     }
 
     h1 {
@@ -129,13 +174,19 @@
       line-height: 0.88;
       letter-spacing: -0.06em;
       text-transform: uppercase;
-      text-shadow: 0 0 28px rgba(255, 79, 216, 0.28);
+      color: var(--text);
+      text-shadow:
+        1px 0 rgba(255, 74, 167, 0.22),
+        -1px 0 rgba(78, 224, 255, 0.18),
+        0 0 18px rgba(176, 109, 255, 0.12);
     }
 
     h1 span {
       display: block;
       color: var(--accent);
-      text-shadow: 0 0 32px rgba(255, 79, 216, 0.42), 0 0 18px rgba(70, 231, 255, 0.18);
+      text-shadow:
+        1px 0 rgba(255, 74, 167, 0.18),
+        -1px 0 rgba(78, 224, 255, 0.14);
     }
 
     .subtitle {
@@ -153,9 +204,10 @@
       min-height: 100%;
       padding: 26px;
       background:
-        linear-gradient(160deg, rgba(255, 79, 216, 0.12), transparent 58%),
-        linear-gradient(20deg, rgba(70, 231, 255, 0.09), transparent 64%),
-        rgba(7, 7, 15, 0.88);
+        linear-gradient(160deg, rgba(255, 179, 107, 0.05), transparent 58%),
+        linear-gradient(20deg, rgba(78, 224, 255, 0.07), transparent 64%),
+        linear-gradient(110deg, rgba(176, 109, 255, 0.05), transparent 58%),
+        rgba(15, 14, 21, 0.92);
     }
 
     .brand-mark {
@@ -163,9 +215,9 @@
       aspect-ratio: 1.38;
       border: 1px solid var(--line);
       background:
-        linear-gradient(90deg, transparent 49%, rgba(255, 79, 216, 0.25) 50%, transparent 51%),
-        radial-gradient(circle, rgba(70, 231, 255, 0.22) 0 4px, transparent 5px),
-        linear-gradient(135deg, rgba(255, 255, 255, 0.035), rgba(0, 0, 0, 0.36));
+        linear-gradient(90deg, transparent 49%, rgba(255, 179, 107, 0.12) 50%, transparent 51%),
+        radial-gradient(circle, rgba(127, 230, 242, 0.14) 0 4px, transparent 5px),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.025), rgba(0, 0, 0, 0.34));
       background-size: auto, 28px 28px, auto;
       display: grid;
       place-items: center;
@@ -179,9 +231,9 @@
       position: absolute;
       width: 88px;
       height: 88px;
-      border: 2px solid rgba(70, 231, 255, 0.38);
+      border: 2px solid rgba(127, 230, 242, 0.26);
       border-radius: 50%;
-      box-shadow: 0 0 22px rgba(70, 231, 255, 0.12);
+      box-shadow: 0 0 16px rgba(78, 224, 255, 0.06);
     }
 
     .brand-mark::before {
@@ -196,12 +248,11 @@
       position: relative;
       z-index: 1;
       padding: 8px 12px;
-      background: #040407;
+      background: #0c0b10;
       border: 1px solid var(--line);
       color: var(--accent-2);
       font-size: 14px;
       letter-spacing: 0.22em;
-      text-shadow: 0 0 14px rgba(70, 231, 255, 0.38);
     }
 
     .side-card p {
@@ -224,10 +275,13 @@
       padding: 22px;
       border: 1px solid var(--line);
       background:
-        linear-gradient(180deg, rgba(255, 79, 216, 0.09), transparent 40%),
-        linear-gradient(135deg, rgba(70, 231, 255, 0.06), transparent 54%),
+        linear-gradient(180deg, rgba(255, 179, 107, 0.04), transparent 40%),
+        linear-gradient(135deg, rgba(78, 224, 255, 0.05), transparent 54%),
+        linear-gradient(225deg, rgba(255, 74, 167, 0.04), transparent 62%),
         var(--card);
-      box-shadow: 0 18px 55px rgba(0, 0, 0, 0.42);
+      box-shadow:
+        0 18px 55px rgba(0, 0, 0, 0.42),
+        inset 0 1px 0 rgba(255,255,255,0.03);
       overflow: hidden;
       transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
       display: flex;
@@ -236,12 +290,16 @@
 
     .tool-card:hover {
       transform: translateY(-4px);
-      border-color: rgba(70, 231, 255, 0.58);
+      border-color: rgba(127, 230, 242, 0.34);
       background:
-        linear-gradient(180deg, rgba(255, 79, 216, 0.14), transparent 42%),
-        linear-gradient(135deg, rgba(70, 231, 255, 0.09), transparent 58%),
+        linear-gradient(180deg, rgba(255, 179, 107, 0.06), transparent 42%),
+        linear-gradient(135deg, rgba(78, 224, 255, 0.07), transparent 58%),
+        linear-gradient(225deg, rgba(255, 74, 167, 0.05), transparent 64%),
         var(--card-2);
-      box-shadow: 0 0 24px rgba(70, 231, 255, 0.14), 0 18px 55px rgba(0, 0, 0, 0.48);
+      box-shadow:
+        0 0 18px rgba(78, 224, 255, 0.08),
+        0 0 16px rgba(255, 74, 167, 0.05),
+        0 18px 55px rgba(0, 0, 0, 0.48);
     }
 
     .tool-card::before {
@@ -249,7 +307,7 @@
       position: absolute;
       right: 16px;
       top: 12px;
-      color: rgba(255, 255, 255, 0.08);
+      color: rgba(255, 255, 255, 0.06);
       font-size: 58px;
       font-weight: 900;
       letter-spacing: -0.12em;
@@ -259,13 +317,17 @@
       width: 58px;
       height: 58px;
       margin-bottom: 22px;
-      border: 1px solid rgba(255, 79, 216, 0.34);
+      border: 1px solid rgba(255, 179, 107, 0.22);
       display: grid;
       place-items: center;
-      background: rgba(255, 79, 216, 0.07);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)),
+        rgba(255, 74, 167, 0.04);
       color: var(--accent);
       font-size: 26px;
-      box-shadow: 0 0 22px rgba(255, 79, 216, 0.18);
+      box-shadow:
+        0 0 14px rgba(255, 74, 167, 0.05),
+        inset 0 1px 0 rgba(255,255,255,0.04);
     }
 
     .tool-card h2 {
@@ -274,7 +336,7 @@
       color: var(--text);
       font-size: 20px;
       line-height: 1.05;
-      letter-spacing: -0.045em;
+      letter-spacing: -0.02em;
       text-transform: uppercase;
     }
 
@@ -299,13 +361,13 @@
     }
 
     .tag {
-      border: 1px solid rgba(70, 231, 255, 0.24);
+      border: 1px solid rgba(127, 230, 242, 0.20);
       color: var(--accent-2);
       padding: 5px 7px;
       font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.10em;
-      background: rgba(70, 231, 255, 0.06);
+      background: rgba(255, 255, 255, 0.03);
     }
 
     .button {
@@ -315,20 +377,24 @@
       justify-content: center;
       width: 100%;
       min-height: 46px;
-      border: 1px solid rgba(70, 231, 255, 0.50);
-      color: #fff;
-      background: linear-gradient(90deg, var(--accent), var(--accent-3), var(--accent-2));
+      border: 1px solid rgba(240, 228, 214, 0.18);
+      color: #f5efe4;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)),
+        linear-gradient(90deg, rgba(255, 179, 107, 0.32), rgba(176, 109, 255, 0.30), rgba(78, 224, 255, 0.28));
       text-decoration: none;
       font-weight: 900;
       font-size: 13px;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      box-shadow: 0 0 26px rgba(255, 79, 216, 0.20), 0 0 22px rgba(70, 231, 255, 0.12);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        0 0 14px rgba(176, 109, 255, 0.06);
       margin-top: 0;
     }
 
     .button:hover {
-      filter: brightness(1.08);
+      filter: brightness(1.08) saturate(1.04);
     }
 
     .footer {
@@ -339,10 +405,14 @@
       margin-top: 18px;
       padding: 18px 20px;
       border: 1px solid var(--line);
-      background: rgba(5, 5, 12, 0.78);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
+        rgba(10, 10, 14, 0.86);
       color: var(--muted);
       font-size: 12px;
       line-height: 1.5;
+      position: relative;
+      overflow: hidden;
     }
 
     .footer a {
@@ -360,21 +430,29 @@
       justify-content: center;
       min-height: 34px;
       padding: 0 12px;
-      border: 1px solid rgba(70, 231, 255, 0.42);
+      border: 1px solid rgba(127, 230, 242, 0.26);
       color: var(--accent-2);
-      background: rgba(70, 231, 255, 0.06);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)),
+        rgba(255, 255, 255, 0.02);
       text-decoration: none;
       font-weight: 900;
       font-size: 12px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      box-shadow: 0 0 18px rgba(70, 231, 255, 0.12);
+      box-shadow: 0 0 14px rgba(78, 224, 255, 0.05);
     }
 
     .telegram-link:hover {
       color: #fff;
-      border-color: rgba(255, 79, 216, 0.54);
+      border-color: rgba(255, 179, 107, 0.34);
       text-decoration: none;
+    }
+
+    @media (max-width: 1080px) {
+      .tools {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     @media (max-width: 860px) {
@@ -485,21 +563,6 @@
       </article>
 
       <article class="tool-card" data-number="04">
-        <div class="icon">▦</div>
-        <h2>ATTAQ Groove Box</h2>
-        <p>
-          Compact browser groove machine for beats, patterns, synth parts, quick loops and noisy electronic sketches.
-        </p>
-        <div class="tags">
-          <span class="tag">Beats</span>
-          <span class="tag">Synth</span>
-          <span class="tag">Loops</span>
-          <span class="tag">Groove</span>
-        </div>
-        <a class="button" href="https://artemyzen.github.io/attaq-groove-box/" target="_blank" rel="noopener noreferrer">Launch Tool</a>
-      </article>
-
-      <article class="tool-card converter-card" data-number="05">
         <div class="icon">⇄</div>
         <h2>ATTAQ Audio Converter</h2>
         <p>
